@@ -2,6 +2,9 @@
 
 This file provides guidance to Claude Code for working with the Next.js frontend.
 
+## 🚨 MANDATORY: Read AI Coding Instructions First
+**BEFORE writing ANY code**, read and follow `../docs/ai-coding-instructions.md`. These are non-negotiable directives.
+
 ## Quick Commands
 
 - `npm run dev` - Start development server with Turbopack (http://localhost:3000)
@@ -12,13 +15,20 @@ This file provides guidance to Claude Code for working with the Next.js frontend
 
 ## Architecture
 
-**Stack:**
-- Next.js 15 with App Router
-- TypeScript with strict mode
-- Tailwind CSS v4 for styling
-- shadcn/ui components (New York style)
-- ESLint with Next.js rules
-- Turbopack for fast development builds
+## 🚨 CRITICAL: Technology Stack (FIXED - NO SUBSTITUTIONS)
+- **ONLY** React with TypeScript (strict mode, no exceptions)
+- **ONLY** Tailwind CSS for styling
+- **ONLY** shadcn/ui for components
+- **REQUIRED** TanStack Query for server state (NO other data fetching)
+- **REQUIRED** Zustand for global UI state (NO Redux, Context, etc.)
+- **REQUIRED** React Hook Form + Zod for forms (NO other form libraries)
+- **FORBIDDEN** Any other state management libraries
+
+**Architecture Rules:**
+- **ALWAYS** place React components with related backend code by feature
+- **MAXIMUM** one primary responsibility per component
+- **REQUIRED** TypeScript strict mode, no exceptions
+- **REQUIRED** Explicit types for all props and API payloads
 
 **Project Structure:**
 - `app/` - Next.js App Router pages and layouts
@@ -57,11 +67,24 @@ This file provides guidance to Claude Code for working with the Next.js frontend
 - Dark mode support built into default template
 - Geist font family (sans and mono variants)
 
-## Authentication Flow
+## 🔒 MANDATORY: Security Requirements
+- **Form Validation**: ALWAYS validate all forms with Zod (REQUIRED)
+- **Input Sanitization**: ALWAYS treat external input as untrusted
+- **Token Storage**: JWT tokens in sessionStorage (per PRD requirements)
+- **Error Handling**: User-friendly messages, NO internal system details
+- **HTTPS Only**: All API calls must use HTTPS in production
 
-When implementing authentication pages:
-1. Login form posts to `POST /api/auth/login`
-2. Store JWT tokens in sessionStorage
-3. Use access token in Authorization header
-4. Implement token refresh logic with refresh token
-5. Handle session timeout and redirects
+## 📋 MANDATORY: Documentation Requirements  
+- **JSDoc Comments**: REQUIRED for complex business logic
+- **Component Documentation**: REQUIRED for all component interfaces and props
+- **State Management**: REQUIRED documentation for complex state patterns
+- **Business Purpose**: REQUIRED explanation of component business purpose
+
+## Authentication Flow (Business Requirements)
+1. **User Authentication**: Login form posts to `POST /api/auth/login`
+2. **Token Management**: Store JWT tokens in sessionStorage (PRD requirement)
+3. **API Authorization**: Use access token in Authorization header
+4. **Token Refresh**: Implement sliding expiration (60-minute sessions)
+5. **Session Timeout**: 5-minute and 1-minute warnings with countdown
+6. **Multi-device Support**: Session management UI for active sessions
+7. **Secure Logout**: Token invalidation and redirect to login

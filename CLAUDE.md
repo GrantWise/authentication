@@ -2,12 +2,21 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 🚨 MANDATORY: Read AI Coding Instructions First
+**BEFORE writing ANY code**, read and follow `docs/ai-coding-instructions.md`. These are non-negotiable directives.
+
 ## Repository Structure
 
 This is a full-stack authentication system with:
-- `frontend/` - Next.js 15 application
-- `backend/` - ASP.NET Core 8 Web API with vertical slice architecture
-- `docs/` - Project documentation
+- `frontend/` - Next.js 15 application  
+- `backend/` - ASP.NET Core 8 Web API with feature-based vertical slice architecture
+- `docs/` - Project documentation including PRD and AI coding instructions
+
+## ⚠️ CRITICAL: Architecture Rules (NO EXCEPTIONS)
+- **ALWAYS** group by features, **NEVER** by technical layers
+- **ALWAYS** put controller, service, models, tests for same feature in same folder
+- **FORBIDDEN:** Splitting related functionality across technical layers
+- **REQUIRED:** Business domain naming that expresses intent clearly
 
 ## Common Commands
 
@@ -32,21 +41,24 @@ This is a Next.js 15 application using the App Router architecture with TypeScri
 ### Backend: ASP.NET Core 8 with Vertical Slice Architecture
 JWT-based authentication API following vertical slice architecture patterns.
 
-**Frontend Technologies:**
-- Next.js 15 with App Router
-- TypeScript with strict mode
+**Frontend Technologies (FIXED - NO SUBSTITUTIONS):**
+- Next.js 15 with App Router  
+- TypeScript with strict mode (REQUIRED)
 - Tailwind CSS v4 for styling
-- shadcn/ui components (configured via components.json)
+- shadcn/ui components (ONLY ui library allowed)
+- TanStack Query for server state (REQUIRED)
+- Zustand for global UI state (REQUIRED) 
+- React Hook Form + Zod for forms (REQUIRED)
 - ESLint with Next.js rules
 - Turbopack for fast development builds
 
-**Backend Technologies:**
-- ASP.NET Core 8.0 Web API
-- Entity Framework Core with SQL Server
+**Backend Technologies (FIXED - NO SUBSTITUTIONS):**
+- ASP.NET Core 8.0 Web API (ONLY backend framework)
+- Entity Framework Core with SQL Server (ONLY ORM)
 - JWT authentication with RS256 signing
-- MediatR for CQRS pattern
-- FluentValidation for request validation
-- Serilog for structured logging
+- MediatR for CQRS pattern  
+- FluentValidation for request validation (REQUIRED)
+- Serilog for structured logging (ONLY logging framework)
 - BCrypt for password hashing
 
 ## Project Structure
@@ -98,10 +110,27 @@ JWT-based authentication API following vertical slice architecture patterns.
 - Logs written to both console and file (`logs/authentication-.log`)
 - Account lockout: 30-minute lockout after 5 failed login attempts
 
-## Security Features
-- JWT tokens with 15-minute access tokens and 60-minute refresh tokens
+## 🔒 MANDATORY Security Requirements
+- **JWT Authentication**: ALWAYS protect endpoints with [Authorize] by default
+- **Input Validation**: ALWAYS validate all input on backend with FluentValidation  
+- **Frontend Validation**: ALWAYS validate all forms with Zod
+- **Secrets**: FORBIDDEN to commit secrets to source control
+- **Logging**: FORBIDDEN to log passwords, tokens, or personal information
+
+## Security Features (ISO 27001 Compliant)
+- JWT tokens: 15-minute access tokens, 60-minute refresh tokens with rotation
 - RSA 2048-bit key pairs for JWT signing
-- BCrypt password hashing with 12 rounds
-- Account lockout protection
-- Comprehensive audit logging
-- CORS configuration for secure frontend communication
+- BCrypt password hashing with 12+ rounds (configurable)
+- Account lockout: 30 minutes after 5 failed attempts
+- Rate limiting: 5 attempts per username per 15 minutes
+- Comprehensive audit logging with 1-year retention
+- TLS 1.3 preferred, TLS 1.2 minimum
+- Security headers: HSTS, CSP, X-Frame-Options, etc.
+- AES-256 encryption for sensitive data at rest
+
+## 📋 MANDATORY Documentation Requirements
+- **XML Documentation**: REQUIRED for ALL public classes, methods, properties
+- **API Documentation**: REQUIRED OpenAPI annotations for all endpoints
+- **Comments**: ALWAYS comment WHY, never WHAT
+- **Self-Documenting**: Code MUST read like business language
+- **JSDoc**: REQUIRED for complex frontend business logic
