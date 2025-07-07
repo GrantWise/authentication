@@ -42,8 +42,16 @@ The following technology choices are **established defaults** based on organizat
 - **Forms**: React Hook Form + Zod validation
 - **Build Tool**: Next.js 15 with App Router and Turbopack
 
+### Architecture Defaults (Confirm Applicability)
+- **Organization**: Feature-based vertical slices (never technical layers)
+- **Backend Pattern**: Direct DbContext usage initially, custom business exceptions
+- **Frontend Pattern**: Co-located components with single responsibility
+- **Security**: [Authorize] by default, validate all inputs (backend + frontend)
+- **Scaling**: Start simple with interfaces, add complexity only at measured triggers
+- **Naming**: Domain-driven business terminology throughout
+
 ### Deviation Protocol
-Technology changes from these defaults **require explicit justification**:
+Technology or architecture changes from these defaults **require explicit justification**:
 1. Document specific problem with default choice
 2. Explain why alternative is necessary
 3. Get stakeholder approval for deviation
@@ -58,13 +66,14 @@ Technology changes from these defaults **require explicit justification**:
 - 1.3 Architecture Philosophy
 - 1.4 Reference to PRD and Design Specifications
 
-### 2. System Architecture
-- 2.1 High-Level Architecture Overview
-- 2.2 Architectural Patterns and Principles
+### 2. System Architecture Confirmation
+- 2.1 Default Architecture Pattern Applicability
+- 2.2 Feature-Based Organization Structure
 - 2.3 System Context Diagram
-- 2.4 Component Architecture
+- 2.4 Component Architecture (Vertical Slices)
 - 2.5 Service Boundaries and Communication
 - 2.6 Data Flow Architecture
+- 2.7 Scaling Architecture (Start Simple Approach)
 
 ### 3. Technology Stack Confirmation
 - 3.1 Default Stack Applicability Assessment
@@ -228,6 +237,12 @@ Technology changes from these defaults **require explicit justification**:
 **Default Stack Confirmation**: Before diving into detailed specifications, I'll confirm:
 1. Are the backend defaults (.NET 8, SQL Server, EF Core) applicable to this project?
 2. Are the frontend defaults (React, Tailwind, shadcn/ui) applicable to this project?
-3. Are there any specific constraints that require deviations from these defaults?
+3. Are the architecture defaults (feature-based organization, vertical slices) applicable?
+4. Are there any specific constraints that require deviations from these defaults?
 
-Ready to begin? I'll start by confirming technology stack applicability and then ask specific questions about implementation requirements within our established patterns.
+**Architecture Pattern Confirmation**: I'll verify:
+1. Does the project fit the feature-based vertical slice architecture pattern?
+2. Are there specific scaling requirements that affect the "start simple" approach?
+3. Are there any domain-specific architectural considerations?
+
+Ready to begin? I'll start by confirming technology stack and architecture pattern applicability, then ask specific questions about implementation requirements within our established patterns.
